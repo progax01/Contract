@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+ // SPDX-License-Identifier: MIT
 pragma solidity ^0.8;
 
 contract Manager {
@@ -6,13 +6,12 @@ contract Manager {
     string usertype2;
     address public owner;
 
-    struct User {
-        string username;
+    
         string usertype;
         bool registered;
-    }
+   
 
-    mapping(address => User) public users;
+    mapping(address => string) public users;
 
     constructor(string memory _type1, string memory _type2) {
         usertype1 = _type1;
@@ -20,8 +19,7 @@ contract Manager {
         owner = msg.sender;
     }
 
-    function user_register(string memory usertype, string memory username)
-        public
+    function user_register(string memory usertype ) public
     {
         require(
             keccak256(bytes(usertype)) == keccak256(bytes(usertype1)) ||
@@ -29,16 +27,14 @@ contract Manager {
             "Invalid user type"
         );
       
-
-        users[msg.sender] = User(username, usertype, true);
+    
+        // users[msg.sender] = User( usertype, true);
     }
 
    function getUserType(address _address) public view returns (string memory) {
     require(users[_address].registered, "User is not registered");
-
- 
     
-
+//display all the users created by this address
     return users[_address].usertype;
     }
 
